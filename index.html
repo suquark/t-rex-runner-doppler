@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+    <title>chrome easter egg: t-rex runner</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js"></script>
+    <script src="doppler.js"></script>
+
+</head>
+
+<body id="t" class="offline">
+    <div id="main-frame-error" class="interstitial-wrapper">
+        <div id="main-content">
+            <div class="icon icon-offline" alt=""></div>
+        </div>
+        <div id="offline-resources">
+            <img id="offline-resources-1x" src="assets/default_100_percent/100-offline-sprite.png">
+            <img id="offline-resources-2x" src="assets/offline-resources-2x-me.png">
+        </div>
+
+        <script>
+            var runner;
+
+            var threshold = 3;
+
+            function onDocumentLoad() {
+                runner = new Runner('.interstitial-wrapper');
+                var dpl = new Doppler();
+                dpl.trace(function(bandwidth) {
+                    console.log(`${bandwidth.left}, ${bandwidth.right}`);
+                    if (bandwidth.left - bandwidth.right > threshold) {
+                        if (runner.isRunning()) {
+                            runner.tRex.endJump();
+                            //this.tRex.setDuck(true);
+                        }
+                    } else if (bandwidth.left - bandwidth.right < -threshold) {
+                        if (runner.isRunning()) {
+                            runner.tRex.startJump(runner.currentSpeed);
+                        }
+                    }
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', onDocumentLoad);
+        </script>
+</body>
+
+</html>
