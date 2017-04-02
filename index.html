@@ -30,7 +30,7 @@
                 runner = new Runner('.interstitial-wrapper');
                 var dpl = new Doppler();
                 dpl.trace(function(bandwidth) {
-                    console.log(`${bandwidth.left}, ${bandwidth.right}`);
+                    // console.log(`${bandwidth.left}, ${bandwidth.right}`);
                     if (bandwidth.left - bandwidth.right > threshold) {
                         if (runner.isRunning()) {
                             runner.tRex.endJump();
